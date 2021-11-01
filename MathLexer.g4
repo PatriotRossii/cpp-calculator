@@ -5,6 +5,7 @@ Minus: '-';
 Slash: '/';
 Star: '*';
 
+Comma: ',';
 LeftParen: '(';
 RightParen: ')';
 
