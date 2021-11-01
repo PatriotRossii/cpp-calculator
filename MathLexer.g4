@@ -1,4 +1,4 @@
-lexer grammar Lexer;
+lexer grammar MathLexer;
 
 Plus: '+';
 Minus: '-';
@@ -13,3 +13,6 @@ INTEGER:
 
 fragment DIGIT:
 	[0-9];
+
+WHITESPACE: [ \t\n] -> skip;
+NEWLINE: ('\r' '\n'?) | '\n';
