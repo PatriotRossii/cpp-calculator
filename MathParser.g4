@@ -5,10 +5,10 @@ options {
 }
 
 expr:
-	INTEGER # Literal
-	| expr Plus expr # Add
-	| expr Minus expr # Sub
+	LeftParen expr RightParen # Paren
 	| expr Slash expr # Div
 	| expr Star expr # Mul
-	| LeftParen expr RightParen # Paren
+	| expr Plus expr # Add
+	| expr Minus expr # Sub
+	| INTEGER # Literal
 	;	
