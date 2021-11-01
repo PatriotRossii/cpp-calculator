@@ -2,6 +2,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <cmath>
 
 #define M_REPEAT_1(function) function[0]
 #define M_REPEAT_2(function) function[0], function[1]
