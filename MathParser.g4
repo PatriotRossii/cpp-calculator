@@ -10,5 +10,6 @@ expr:
 	| expr Star expr # Mul
 	| expr Plus expr # Add
 	| expr Minus expr # Sub
+	| IDENT LeftParen expr RightParen # Func
 	| INTEGER # Literal
 	;	
