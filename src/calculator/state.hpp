@@ -14,40 +14,40 @@
 #define M_REPEAT_(N, function) M_REPEAT__(N, function)
 #define M_REPEAT(N, function) M_REPEAT_(M_EXPAND(N), function)
 
-#define call(function, count) function(M_REPEAT(count, args))
-#define function_entry_full(name, function, count) std::pair(std::string(#name), [](std::vector<double>& args) { return call(function, count); })
-#define function_entry(name, count) std::pair(std::string(#name), [](std::vector<double>& args) { return call(std::name, count); })
+#define M_CALL(function, count) function(M_REPEAT(count, args))
+#define M_FUNCTION_ENTRY_FULL(name, function, count) std::pair(std::string(#name), [](std::vector<double>& args) { return M_CALL(function, count); })
+#define M_FUNCTION_ENTRY(name, count) std::pair(std::string(#name), [](std::vector<double>& args) { return M_CALL(std::name, count); })
 
 class CalculatorState {
 	std::unordered_map<std::string, std::function<double(std::vector<double>&)>> functions{
 		// Basic operations
-		function_entry(abs, 1), function_entry_full(mod, std::fmod, 2), function_entry_full(rem, std::remainder, 2),
-		function_entry(fma, 3), function_entry_full(max, std::fmax, 2), function_entry_full(min, std::fmin, 2),
-		function_entry_full(dim, std::fdim, 2),
+		M_FUNCTION_ENTRY(abs, 1), M_FUNCTION_ENTRY_FULL(mod, std::fmod, 2), M_FUNCTION_ENTRY_FULL(rem, std::remainder, 2),
+		M_FUNCTION_ENTRY(fma, 3), M_FUNCTION_ENTRY_FULL(max, std::fmax, 2), M_FUNCTION_ENTRY_FULL(min, std::fmin, 2),
+		M_FUNCTION_ENTRY_FULL(dim, std::fdim, 2),
 		// Linear interpolation
-		function_entry(lerp, 3),
+		M_FUNCTION_ENTRY(lerp, 3),
 		// Exponential functions
-		function_entry(exp, 1), function_entry(exp2, 1), function_entry(expm1, 1),
-		function_entry(log, 1), function_entry(log10, 1), function_entry(log2, 1),
-		function_entry(log1p, 1),
+		M_FUNCTION_ENTRY(exp, 1), M_FUNCTION_ENTRY(exp2, 1), M_FUNCTION_ENTRY(expm1, 1),
+		M_FUNCTION_ENTRY(log, 1), M_FUNCTION_ENTRY(log10, 1), M_FUNCTION_ENTRY(log2, 1),
+		M_FUNCTION_ENTRY(log1p, 1),
 		// Power functions
-		function_entry(pow, 2), function_entry(sqrt, 1), function_entry(cbrt, 1),
+		M_FUNCTION_ENTRY(pow, 2), M_FUNCTION_ENTRY(sqrt, 1), M_FUNCTION_ENTRY(cbrt, 1),
 		// Trigonometric functions
-		function_entry(sin, 1), function_entry(cos, 1), function_entry(tan, 1),
-		function_entry(asin, 1), function_entry(acos, 1), function_entry(atan, 1),
-		function_entry(atan2, 2),
+		M_FUNCTION_ENTRY(sin, 1), M_FUNCTION_ENTRY(cos, 1), M_FUNCTION_ENTRY(tan, 1),
+		M_FUNCTION_ENTRY(asin, 1), M_FUNCTION_ENTRY(acos, 1), M_FUNCTION_ENTRY(atan, 1),
+		M_FUNCTION_ENTRY(atan2, 2),
 		// Hyperbolic functions
-		function_entry(sinh, 1), function_entry(cosh, 1), function_entry(tanh, 1),
-		function_entry(asinh, 1), function_entry(acosh, 1), function_entry(atanh, 1),
+		M_FUNCTION_ENTRY(sinh, 1), M_FUNCTION_ENTRY(cosh, 1), M_FUNCTION_ENTRY(tanh, 1),
+		M_FUNCTION_ENTRY(asinh, 1), M_FUNCTION_ENTRY(acosh, 1), M_FUNCTION_ENTRY(atanh, 1),
 		// Error and gamma functions
-		function_entry(erf, 1), function_entry(erfc, 1), function_entry(tgamma, 1),
-		function_entry(lgamma, 1),
+		M_FUNCTION_ENTRY(erf, 1), M_FUNCTION_ENTRY(erfc, 1), M_FUNCTION_ENTRY(tgamma, 1),
+		M_FUNCTION_ENTRY(lgamma, 1),
 		// Nearest integer floating-point operations
-		function_entry(ceil, 1), function_entry(floor, 1), function_entry(trunc, 1),
-		function_entry(round, 1),
+		M_FUNCTION_ENTRY(ceil, 1), M_FUNCTION_ENTRY(floor, 1), M_FUNCTION_ENTRY(trunc, 1),
+		M_FUNCTION_ENTRY(round, 1),
 		// Floating-point manipulation functions
-		function_entry(ldexp, 2), function_entry(scalbn, 2), function_entry(ilogb, 1),
-		function_entry(logb, 1), function_entry(ldexp, 2)
+		M_FUNCTION_ENTRY(ldexp, 2), M_FUNCTION_ENTRY(scalbn, 2), M_FUNCTION_ENTRY(ilogb, 1),
+		M_FUNCTION_ENTRY(logb, 1), M_FUNCTION_ENTRY(ldexp, 2)
 	};
 public:
 	double invoke(const std::string& name, std::vector<double>& args) const {
