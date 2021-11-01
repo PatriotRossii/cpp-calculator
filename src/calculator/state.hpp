@@ -15,11 +15,11 @@
 #define M_REPEAT(N, function) M_REPEAT_(M_EXPAND(N), function)
 
 #define call(function, count) function(M_REPEAT(count, args))
-#define function_entry_full(name, function, count) std::pair(std::string(#name), [](std::vector<double> args) { return call(function, count); })
-#define function_entry(name, count) std::pair(std::string(#name), [](std::vector<double> args) { return call(std::name, count); })
+#define function_entry_full(name, function, count) std::pair(std::string(#name), [](std::vector<double>& args) { return call(function, count); })
+#define function_entry(name, count) std::pair(std::string(#name), [](std::vector<double>& args) { return call(std::name, count); })
 
 class CalculatorState {
-	std::unordered_map<std::string, std::function<double(std::vector<double>)>> functions{
+	std::unordered_map<std::string, std::function<double(std::vector<double>&)>> functions{
 		// Basic operations
 		function_entry(abs, 1), function_entry_full(mod, std::fmod, 2), function_entry_full(rem, std::remainder, 2),
 		function_entry(fma, 3), function_entry_full(max, std::fmax, 2), function_entry_full(min, std::fmin, 2),
@@ -47,6 +47,10 @@ class CalculatorState {
 		function_entry(round, 1),
 		// Floating-point manipulation functions
 		function_entry(ldexp, 2), function_entry(scalbn, 2), function_entry(ilogb, 1),
-		function_entry(logb, 1), function_entry(ldexp, 2),
+		function_entry(logb, 1), function_entry(ldexp, 2)
 	};
+public:
+	double invoke(const std::string& name, std::vector<double>& args) const {
+		return functions.at(name)(args);
+	}
 };
