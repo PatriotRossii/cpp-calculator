@@ -50,7 +50,15 @@ class CalculatorState {
 		M_FUNCTION_ENTRY(round, 1),
 		// Floating-point manipulation functions
 		M_FUNCTION_ENTRY(ldexp, 2), M_FUNCTION_ENTRY(scalbn, 2), M_FUNCTION_ENTRY(ilogb, 1),
-		M_FUNCTION_ENTRY(logb, 1), M_FUNCTION_ENTRY(ldexp, 2)
+		M_FUNCTION_ENTRY(logb, 1), M_FUNCTION_ENTRY(ldexp, 2),
+		// Mathematical special functions
+		M_FUNCTION_ENTRY(assoc_laguerre, 3), M_FUNCTION_ENTRY(assoc_legendre, 3), M_FUNCTION_ENTRY(beta, 2),
+		M_FUNCTION_ENTRY(comp_ellint_1, 1), M_FUNCTION_ENTRY(comp_ellint_2, 1), M_FUNCTION_ENTRY(comp_ellint_3, 2),
+		M_FUNCTION_ENTRY(cyl_bessel_i, 2), M_FUNCTION_ENTRY(cyl_bessel_j, 2), M_FUNCTION_ENTRY(cyl_bessel_k, 2),
+		M_FUNCTION_ENTRY(cyl_neumann, 2), M_FUNCTION_ENTRY(ellint_1, 2), M_FUNCTION_ENTRY(ellint_2, 2),
+		M_FUNCTION_ENTRY(ellint_3, 3), M_FUNCTION_ENTRY(expint, 1), M_FUNCTION_ENTRY(hermite, 2),
+		M_FUNCTION_ENTRY(legendre, 2), M_FUNCTION_ENTRY(laguerre, 2), M_FUNCTION_ENTRY(riemann_zeta, 1),
+		M_FUNCTION_ENTRY(sph_bessel, 2), M_FUNCTION_ENTRY(sph_legendre, 3), M_FUNCTION_ENTRY(sph_neumann, 2)
 	};
 public:
 	double invoke(const std::string& name, std::vector<double>& args) const {
