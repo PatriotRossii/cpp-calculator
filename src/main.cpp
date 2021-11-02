@@ -6,6 +6,8 @@
 #include "MathParser.h"
 
 #include "Visitor.hpp"
+#include "ast.hpp"
+#include "calculator/state.hpp"
 
 using namespace std;
 using namespace antlr4;
@@ -22,9 +24,10 @@ int main(int argc, const char* argv[]) {
         MathParser parser(&tokens);
 
         MathParser::ExprContext* tree = parser.expr();
+        CalculatorState state;
 
         Visitor visitor;
-        double result = visitor.visit(tree).as<double>();
+        double result = visitor.visit(tree).as<ExprAST*>()->eval(state);
         std::cout << result << "\n> ";
     }
 

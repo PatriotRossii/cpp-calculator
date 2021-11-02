@@ -1,6 +1,9 @@
+#pragma once
+
 #include <memory>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #include "calculator/state.hpp"
 
@@ -25,27 +28,33 @@ public:
 
 class BinaryExprAST: public ExprAST {
 	BinaryOperation operation;
-	std::unique_ptr<ExprAST> LHS, RHS;
+	ExprAST *LHS, *RHS;
 public:
 	BinaryExprAST(BinaryOperation operation,
-		std::unique_ptr<ExprAST> LHS, std::unique_ptr<ExprAST> RHS)
+		ExprAST* LHS, ExprAST* RHS)
 	: operation(operation), LHS(std::move(LHS)), RHS(std::move(RHS)) {}
 	double eval(CalculatorState& state) override {
-		return LHS->eval(state) + RHS->eval(state);
+		switch(operation) {
+		case BinaryOperation::ADD: return LHS->eval(state) + RHS->eval(state);
+		case BinaryOperation::SUB: return LHS->eval(state) - RHS->eval(state);
+		case BinaryOperation::DIV: return LHS->eval(state) / RHS->eval(state);
+		case BinaryOperation::MUL: return LHS->eval(state) * RHS->eval(state);
+		default: return 0;
+		}
 	}
 };
 
 class CallExprAST: public ExprAST {
 	std::string name;
-	std::vector<std::unique_ptr<ExprAST>> args;
+	std::vector<ExprAST*> args;
 public:
 	CallExprAST(const std::string& name,
-		std::vector<std::unique_ptr<ExprAST>> args)
+		std::vector<ExprAST*> args)
 	: name(name), args(std::move(args)) { }
 	double eval(CalculatorState& state) override {
 		std::vector<double> values;
 		std::transform(args.begin(), args.end(),
-			std::back_inserter(values), [&state](const std::unique_ptr<ExprAST>& arg) {
+			std::back_inserter(values), [&state](ExprAST* arg) {
 				return arg->eval(state);
 			}
 		);
