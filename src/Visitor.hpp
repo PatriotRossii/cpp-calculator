@@ -12,7 +12,7 @@ class Visitor: public MathParserBaseVisitor {
 public:
 	antlrcpp::Any visitLiteral(MathParser::LiteralContext *ctx) {
 		return (ExprAST*) new IntegerExprAST(
-			std::stod(ctx->INTEGER()->getText())
+			std::stod(ctx->LITERAL()->getText())
 		);
 	}
 	antlrcpp::Any visitAdd(MathParser::AddContext *ctx) {

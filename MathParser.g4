@@ -11,5 +11,5 @@ expr:
 	| expr Plus expr # Add
 	| expr Minus expr # Sub
 	| IDENT LeftParen exprs+=expr (Comma exprs+=expr)* RightParen # Func
-	| INTEGER # Literal
+	| LITERAL # Literal
 	;	
